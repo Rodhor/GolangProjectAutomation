@@ -1,6 +1,8 @@
 package main
 
 import (
+	t "projectAutomation/internal/pkg/types"
+
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -11,62 +13,12 @@ import (
 // TODO: Add lipgloss styling and view helper functions here.
 
 // ==================================================
-// Domain Models and Data Structures
-// ==================================================
-
-// File represents a file with its type, content, and placement directory.
-type File struct {
-	FileType     string
-	Content      string
-	PlacementDir string
-}
-
-// Package represents a package (e.g., Pandas, bubbletea) that can be installed
-// for a programming language.
-type Package struct {
-	Name       string
-	SubDir     []string
-	SubFiles   []File
-	InstallCmd string
-}
-
-// Language represents a programming language (e.g., Python, Go)
-// Depending on the language, it may have different packages and files.
-type Language struct {
-	Name     string
-	SubDir   []string
-	subFiles []File
-	Packages []Package
-}
-
-// FetchPossibleLanguages returns a list of available programming languages.
-func FetchAllLanguages() []Language {
-	return []Language{}
-}
-
-// FetchPossiblePackages returns a list of available packages for a given language.
-func FetchPossiblePackages(languageSelection string) []Package {
-	return []Package{}
-}
-
-// ==================================================
 // Bubble Tea Model and Application States
 // ==================================================
 
-// State is an enumeration that represents the current view/state.
-type State int
-
-const (
-	projectName State = iota
-	languageSelection
-	packageSelection
-	packageSubDir
-	SummaryAndConfirmation
-)
-
 // mainModel is the Bubble Tea model for the main application.
 type mainModel struct {
-	state State
+	state t.State
 }
 
 // Init is the initial command for the mainModel.
