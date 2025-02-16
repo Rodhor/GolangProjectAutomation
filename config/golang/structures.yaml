@@ -1,0 +1,132 @@
+BasicStructure:
+  .gitignore:
+    content: ""
+  cmd/:
+    app/:
+      main.go:
+        content: |
+          package main
+
+          import "fmt"
+
+          func main() {
+            fmt.Println("Hello World!")
+          }
+  internal/:
+    pkg/:
+      fsutils/:
+        fsutils.go:
+          content: ""
+        README.md:
+          content: ""
+  pkg/: {}
+  docs/:
+    README.md:
+      content: ""
+
+WebDevelopmentStructure:
+  .gitignore:
+    content: ""
+  cmd/:
+    app/:
+      main.go:
+        content: "package main"
+  internal/:
+    pkg/:
+      fsutils/:
+        fsutils.go:
+          content: "package fsutils"
+        README.md:
+          content: ""
+  pkg/: {}
+  api/: {}
+  web/: {}
+  examples/: {}
+  docs/:
+    README.md:
+      content: ""
+
+AdvancedStructure:
+  .gitignore:
+    content: ""
+  cmd/:
+    app/:
+      main.go:
+        content: "package main"
+  internal/:
+    pkg/:
+      fsutils/:
+        fsutils.go:
+          content: "package fsutils"
+        README.md:
+          content: ""
+      types/:
+        types.go:
+          content: "package types"
+        README.md:
+          content: ""
+  test/: {}
+  config/:
+    README.md:
+      content: ""
+  docs/:
+    README.md:
+      content: ""
+  pkg/: {}
+
+ProductionStructure:
+  .gitignore:
+    content: ""
+  cmd/:
+    app/:
+      main.go:
+        content: "package main"
+  internal/:
+    pkg/:
+      fsutils/:
+        fsutils.go:
+          content: "package fsutils"
+        README.md:
+          content: ""
+      types/:
+        baseModels.go:
+          content: "package types"
+        README.md:
+          content: ""
+    service/:
+      service.go:
+        content: "package service"
+  pkg/: {}
+  configs/:
+    config.yaml:
+      content: ""
+    prod.yaml:
+      content: ""
+  deploy/: {}
+  build/: {}
+  scripts/:
+    release.sh:
+      content: ""
+    migrate.sh:
+      content: ""
+  test/: {}
+  docs/:
+    README.md:
+      content: ""
+  logs/: {}
+  config/:
+    README.md:
+      content: ""
+
+makefileNeeded: True
+makeFileContent: ""
+commands:
+  goMod:
+    cmd: "Go mod init"
+    runtime: "beforePackageInstall"
+  gitInit:
+    cmd: |
+      git init
+      git add .
+      git commit -m 'Initial commit.'
+    runtime: "end"
