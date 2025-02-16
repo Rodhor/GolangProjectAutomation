@@ -1,8 +1,6 @@
 package main
 
 import (
-	t "projectAutomation/internal/pkg/types"
-
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -17,9 +15,7 @@ import (
 // ==================================================
 
 // mainModel is the Bubble Tea model for the main application.
-type mainModel struct {
-	state t.State
-}
+type mainModel struct{}
 
 // Init is the initial command for the mainModel.
 func (m mainModel) Init() tea.Cmd {
