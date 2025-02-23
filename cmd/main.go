@@ -1,7 +1,8 @@
 package main
 
 import (
-	"projectAutomation/internal/pkg/helper"
+	"log"
+	"projectAutomation/internal/pkg/fsutils"
 	"projectAutomation/internal/pkg/parser"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -53,5 +54,8 @@ func main() {
 	// }
 
 	langs, errors := parser.RetrieveEmbeddedLanguages()
-	helper.PrintParsedResults(langs, errors)
+	if len(errors) > 0 {
+		log.Print("Damn")
+	}
+	fsutils.CreateFiletree("/home/rodhor/Documents/test/", langs[0].FileStructure[0].Contents)
 }

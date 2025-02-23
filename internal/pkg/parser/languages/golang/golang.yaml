@@ -25,7 +25,7 @@ filestructure:
               "fsutils/":
                 children:
                   "fsutils.go":
-                    content: ""
+                    content: "package fsutils"
                   "README.md":
                     content: ""
       "pkg/":
@@ -43,7 +43,14 @@ filestructure:
           "app/":
             children:
               "main.go":
-                content: "package main"
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
       "internal/":
         children:
           "pkg/":
@@ -75,7 +82,14 @@ filestructure:
           "app/":
             children:
               "main.go":
-                content: "package main"
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
       "internal/":
         children:
           "pkg/":
@@ -113,7 +127,14 @@ filestructure:
           "app/":
             children:
               "main.go":
-                content: "package main"
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
       "internal/":
         children:
           "pkg/":
