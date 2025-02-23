@@ -13,12 +13,13 @@ const (
 type FileStructure struct {
 	ID       string                     `ymal:"-"`
 	Contents map[string]FileOrDirectory `yaml:"contents"`
-	Commands map[string]Command         `yaml:"commands, omitempty"`
+	Commands map[string]Command         `yaml:"commands,omitempty"`
 }
 
 type FileOrDirectory struct {
-	Content  *string                    `yaml:"content, omitempty"`
-	Children map[string]FileOrDirectory `yaml:", omitempty"`
+	Type     string                     `yaml:"type,omitempty"`
+	Content  *string                    `yaml:"content,omitempty"`
+	Children map[string]FileOrDirectory `yaml:"children,omitempty"`
 }
 
 type Command struct {

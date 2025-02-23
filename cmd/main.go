@@ -1,6 +1,9 @@
 package main
 
 import (
+	"projectAutomation/internal/pkg/helper"
+	"projectAutomation/internal/pkg/parser"
+
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -44,8 +47,11 @@ func (m mainModel) View() string {
 // ==================================================
 
 func main() {
-	p := tea.NewProgram(mainModel{})
-	if _, err := p.Run(); err != nil {
-		panic(err)
-	}
+	// p := tea.NewProgram(mainModel{})
+	// if _, err := p.Run(); err != nil {
+	// 	panic(err)
+	// }
+
+	langs, errors := parser.RetrieveEmbeddedLanguages()
+	helper.PrintParsedResults(langs, errors)
 }
