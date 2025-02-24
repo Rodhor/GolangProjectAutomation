@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"projectAutomation/internal/pkg/fsutils"
 	"projectAutomation/internal/pkg/parser"
+	"projectAutomation/internal/pkg/runner"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -57,5 +58,12 @@ func main() {
 	if len(errors) > 0 {
 		log.Print("Damn")
 	}
-	fsutils.CreateFiletree("/home/rodhor/Documents/test/", langs[0].FileStructure[0].Contents)
+
+	cmdErrors := runner.CommandRunner(langs[0].Commands, testDir)
+	if len(cmdErrors) == 0 {
+		fmt.Println("All Commands ran without errors")
+	}
+	// fsutils.CreateFiletree(testDir, langs[0].FileStructure[0].Contents)
 }
+
+var testDir = "/home/rodhor/Documents/test/"

@@ -189,7 +189,7 @@ makefileNeeded: true
 makefileContent: ""
 commands:
   goMod:
-    cmd: "Go mod init"
+    cmd: "go mod init test"
     runtime: "beforePackageInstallation"
   gitInit:
     cmd: |
