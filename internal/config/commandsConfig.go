@@ -1,10 +1,14 @@
 package config
 
-import "runtime"
-
-func GetShell() (string, string) {
-	if runtime.GOOS == "windows" {
-		return "cmd", "/c"
-	}
-	return "sh", "-c"
+type Shell struct {
+	Shell   string
+	ArgFlag string
 }
+
+type PlaceholderArg string
+
+const (
+	ArgProjectName     PlaceholderArg = "{{project_name}}"
+	ArgProjectPath     PlaceholderArg = "{{project_path}}"
+	ArgProjectLanguage PlaceholderArg = "{{project_language}}"
+)

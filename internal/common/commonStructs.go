@@ -25,4 +25,5 @@ type FileOrDirectory struct {
 type Command struct {
 	Cmd     string `yaml:"cmd"`
 	RunTime string `yaml:"runtime"`
+	ExecDir string `yaml:"exec_dir,omitempty"`
 }

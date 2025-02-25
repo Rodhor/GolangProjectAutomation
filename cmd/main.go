@@ -59,7 +59,7 @@ func main() {
 		log.Print("Damn")
 	}
 
-	cmdErrors := runner.CommandRunner(langs[0].Commands, testDir)
+	cmdErrors := runner.CommandsOrganiser(langs[0].Commands)
 	if len(cmdErrors) == 0 {
 		fmt.Println("All Commands ran without errors")
 	}
