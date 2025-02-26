@@ -4,7 +4,6 @@ import (
 	"projectAutomation/internal/config"
 	"regexp"
 	"runtime"
-	"strings"
 )
 
 func GetShell() config.Shell {
@@ -14,42 +13,45 @@ func GetShell() config.Shell {
 	return config.Shell{Shell: "sh", ArgFlag: "-c"}
 }
 
-func ResolvePlaceholder(p config.PlaceholderArg) string {
+func ResolvePlaceholder(p config.PlaceholderArg, project *config.Project) string {
 	switch p {
 
 	case config.ArgProjectName:
-		return GetProjectName()
+		return GetProjectName(project)
 
 	case config.ArgProjectPath:
-		return GetProjectPath()
+		return GetProjectPath(project)
 
 	case config.ArgProjectLanguage:
-		return GetProjectLanguage()
+		return GetProjectLanguage(project)
 
 	default:
 		return "{{" + string(p) + "}}"
 	}
 }
 
-func AdjustDynamicCommands(cmd string) string {
-	re := regexp.MustCompile(`\{\{(\w+)\}\}`)
+func AdjustDynamicCommands(cmd string, project *config.Project) string {
+	re := regexp.MustCompile(`\{\{\s*(\w+)\s*\}\}`)
 	return re.ReplaceAllStringFunc(cmd, func(match string) string {
-		key := strings.Trim(match, "{}")
-
+		// Use FindStringSubmatch to extract the variable name without extra spaces.
+		submatches := re.FindStringSubmatch(match)
+		if len(submatches) < 2 {
+			return match
+		}
+		key := submatches[1]
 		p := config.PlaceholderArg(key)
-
-		return ResolvePlaceholder(p)
+		return ResolvePlaceholder(p, project)
 	})
 }
 
-func GetProjectName() string {
-	return ""
+func GetProjectName(p *config.Project) string {
+	return p.ProjectName
 }
 
-func GetProjectPath() string {
-	return ""
+func GetProjectPath(p *config.Project) string {
+	return p.ProjectDir
 }
 
-func GetProjectLanguage() string {
-	return ""
+func GetProjectLanguage(p *config.Project) string {
+	return p.ProjectLanguage
 }

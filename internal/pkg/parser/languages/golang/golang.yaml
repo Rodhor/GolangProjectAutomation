@@ -189,12 +189,12 @@ makefileNeeded: true
 makefileContent: ""
 commands:
   goMod:
-    cmd: "go mod init test"
+    cmd: "go mod init {{project_name}}"
     runtime: "beforePackageInstallation"
   gitInit:
     cmd: |
       git init
       git add .
-      git commit -m 'Initial commit.'
+      git commit -m 'Initial commit for project: {{project_name}}.'
     runtime: "end"
 packageIDs: []

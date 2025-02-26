@@ -48,22 +48,24 @@ func (m mainModel) View() string {
 // Main Program Entry Point
 // ==================================================
 
+var testDir = "/home/rodhor/Documents/test/"
+
 func main() {
 	// p := tea.NewProgram(mainModel{})
 	// if _, err := p.Run(); err != nil {
 	// 	panic(err)
 	// }
-
 	langs, errors := parser.RetrieveEmbeddedLanguages()
 	if len(errors) > 0 {
 		log.Print("Damn")
 	}
 
-	cmdErrors := runner.CommandsOrganiser(langs[0].Commands)
+	cmdErrors := runner.CommandsOrganiser(langs[0].Commands, &p)
 	if len(cmdErrors) == 0 {
 		fmt.Println("All Commands ran without errors")
+	} else {
+		fmt.Println(cmdErrors)
 	}
+
 	// fsutils.CreateFiletree(testDir, langs[0].FileStructure[0].Contents)
 }
-
-var testDir = "/home/rodhor/Documents/test/"

@@ -7,14 +7,14 @@ import (
 	"projectAutomation/internal/config"
 )
 
-func CommandsOrganiser(commands map[string]common.Command) []error {
+func CommandsOrganiser(commands map[string]common.Command, p *config.Project) []error {
 	var errors []error
 	// Get shell of current running computer
 	shell := GetShell()
 
 	for _, cmd := range commands {
-		execCmd := AdjustDynamicCommands(cmd.Cmd)
-		err := CommandRunner(execCmd, shell, cmd.ExecDir)
+		execCmd := AdjustDynamicCommands(cmd.Cmd, p)
+		err := CommandRunner(execCmd, shell, p.ProjectDir)
 		if err != nil {
 			errors = append(errors, err)
 		}
