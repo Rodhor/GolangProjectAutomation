@@ -1,0 +1,200 @@
+id: "python"
+name: "Python"
+filestructure:
+  - id: "basic"
+    contents:
+      ".gitignore":
+        content: ""
+      "cmd/":
+        children:
+          "app/":
+            children:
+              "main.go":
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
+      "internal/":
+        children:
+          "pkg/":
+            children:
+              "fsutils/":
+                children:
+                  "fsutils.go":
+                    content: "package fsutils"
+                  "README.md":
+                    content: ""
+      "pkg/":
+        children: {}
+      "docs/":
+        children:
+          "README.md":
+            content: ""
+  - id: "web"
+    contents:
+      ".gitignore":
+        content: ""
+      "cmd/":
+        children:
+          "app/":
+            children:
+              "main.go":
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
+      "internal/":
+        children:
+          "pkg/":
+            children:
+              "fsutils/":
+                children:
+                  "fsutils.go":
+                    content: "package fsutils"
+                  "README.md":
+                    content: ""
+      "pkg/":
+        children: {}
+      "api/":
+        children: {}
+      "web/":
+        children: {}
+      "examples/":
+        children: {}
+      "docs/":
+        children:
+          "README.md":
+            content: ""
+  - id: "advanced"
+    contents:
+      ".gitignore":
+        content: ""
+      "cmd/":
+        children:
+          "app/":
+            children:
+              "main.go":
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
+      "internal/":
+        children:
+          "pkg/":
+            children:
+              "fsutils/":
+                children:
+                  "fsutils.go":
+                    content: "package fsutils"
+                  "README.md":
+                    content: ""
+              "types/":
+                children:
+                  "types.go":
+                    content: "package types"
+                  "README.md":
+                    content: ""
+      "test/":
+        children: {}
+      "config/":
+        children:
+          "README.md":
+            content: ""
+      "docs/":
+        children:
+          "README.md":
+            content: ""
+      "pkg/":
+        children: {}
+  - id: "production"
+    contents:
+      ".gitignore":
+        content: ""
+      "cmd/":
+        children:
+          "app/":
+            children:
+              "main.go":
+                content: |
+                  package main
+
+                  import "fmt"
+
+                  func main() {
+                    fmt.Println("Hello World!")
+                  }
+      "internal/":
+        children:
+          "pkg/":
+            children:
+              "fsutils/":
+                children:
+                  "fsutils.go":
+                    content: "package fsutils"
+                  "README.md":
+                    content: ""
+              "types/":
+                children:
+                  "baseModels.go":
+                    content: "package types"
+                  "README.md":
+                    content: ""
+          "service/":
+            children:
+              "service.go":
+                content: "package service"
+      "pkg/":
+        children: {}
+      "configs/":
+        children:
+          "config.yaml":
+            content: ""
+          "prod.yaml":
+            content: ""
+      "deploy/":
+        children: {}
+      "build/":
+        children: {}
+      "scripts/":
+        children:
+          "release.sh":
+            content: ""
+          "migrate.sh":
+            content: ""
+      "test/":
+        children: {}
+      "docs/":
+        children:
+          "README.md":
+            content: ""
+      "logs/":
+        children: {}
+      "config/":
+        children:
+          "README.md":
+            content: ""
+makefileNeeded: true
+makefileContent: ""
+commands:
+  goMod:
+    cmd: "go mod init {{project_name}}"
+    runtime: "beforePackageInstallation"
+  gitInit:
+    cmd: |
+      git init
+      git add .
+      git commit -m 'Initial commit for project: {{project_name}}.'
+    runtime: "end"
+packageIDs: []

@@ -1,7 +1,7 @@
 package config
 
 type Project struct {
-	ProjectName
+	ProjectName     string
 	ProjectLanguage string
 	ProjectDir      string
 }
