@@ -101,6 +101,10 @@ func selectLanguageSpecificOptions(lang config.Language) (map[string]any, error)
 	return result, nil
 }
 
+// Step 3: Overall confirmation and running the programm
+func getConfirmationToExecute() {
+}
+
 func MainUI(langs []config.Language) {
 	firstSelection, err := selectLanguage(langs)
 	if err != nil {
