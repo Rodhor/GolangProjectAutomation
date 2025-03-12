@@ -10,6 +10,15 @@ const (
 	End
 )
 
+type Confirmation int
+
+const (
+	OnlyLanguage Confirmation = iota
+	RenderFully
+	WithoutCommands
+	Cancel
+)
+
 type FileStructure struct {
 	ID       string                     `ymal:"-"`
 	Contents map[string]FileOrDirectory `yaml:"contents"`
