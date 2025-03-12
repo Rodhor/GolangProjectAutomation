@@ -13,6 +13,7 @@ import (
 func selectLanguage(langs []config.Language) (map[string]string, error) {
 	var languageID string
 	var projectName string
+
 	form := huh.NewForm(
 		huh.NewGroup(
 			huh.NewInput().
@@ -24,6 +25,7 @@ func selectLanguage(langs []config.Language) (map[string]string, error) {
 					}
 					return nil
 				}),
+
 			huh.NewSelect[string]().
 				Title("Choose a language").
 				Value(&languageID).
@@ -49,44 +51,40 @@ func selectLanguage(langs []config.Language) (map[string]string, error) {
 
 // Step 2: Language-Specific Options (Folder structure, packages, etc.)
 func selectLanguageSpecificOptions(lang config.Language) (map[string]any, error) {
-	var folderstructure string
-	var packages []string
-	var createPackageStructure bool
+	var (
+		folderstructure        string
+		packages               []string
+		createPackageStructure bool
+	)
 
-	result := make(map[string]any)
+	folderstructureOptions := fetchFolderStructures(lang)
 
-	group := huh.NewGroup(
+	fields := []huh.Field{
 		huh.NewSelect[string]().
 			Title("Choose your desired Folderstructure").
 			Value(&folderstructure).
 			OptionsFunc(func() []huh.Option[string] {
-				opts := fetchFolderStructures(lang)
-				if len(opts) == 0 {
-					return []huh.Option[string]{huh.NewOption("None", "none")}
-				}
-				return opts
+				return folderstructureOptions
 			}, &folderstructure),
-		// Only add package selection if options are available.
-		func() huh.Field {
-			opts := fetchPackageOptions(lang)
-			if len(opts) > 0 {
-				return huh.NewMultiSelect[string]().
-					Title("Choose your desired Packages").
-					Value(&packages).
-					OptionsFunc(func() []huh.Option[string] {
-						return opts
-					}, nil)
-			}
-			return huh.NewInput().Title("No packages available").Value(new(string))
-		}(),
-		huh.NewSelect[bool]().
-			Title("Should the folderstructure for each package be rendered?").
-			Options(
-				huh.NewOption("Yes", true),
-				huh.NewOption("No", false),
-			).
+	}
+
+	// If packacges are available for the language, allow user to select them
+	packageOptions := fetchPackageOptions(lang)
+	if len(packageOptions) > 0 {
+		fields = append(fields, huh.NewMultiSelect[string]().
+			Title("Choose your desired Packages").
+			Value(&packages).
+			OptionsFunc(func() []huh.Option[string] {
+				return packageOptions
+			}, nil))
+
+		fields = append(fields, huh.NewConfirm().
+			Title("Would you like to create Packagespecific folderstructures and files?").
 			Value(&createPackageStructure),
-	)
+		)
+	}
+
+	group := huh.NewGroup(fields...)
 
 	form := huh.NewForm(group)
 	err := form.Run()
@@ -94,9 +92,11 @@ func selectLanguageSpecificOptions(lang config.Language) (map[string]any, error)
 		return nil, err
 	}
 
-	result["Folderstructure"] = folderstructure
-	result["Packages"] = packages
-	result["Create Package Structure"] = createPackageStructure
+	result := map[string]any{
+		"Folderstructure":          folderstructure,
+		"Packages":                 packages,
+		"Create Package Structure": createPackageStructure,
+	}
 
 	return result, nil
 }
@@ -151,13 +151,4 @@ func fetchPackageOptions(lang config.Language) []huh.Option[string] {
 		options = append(options, huh.NewOption(pkg, pkg))
 	}
 	return options
-}
-
-func main() {
-	// For demonstration, assume availableLanguages is pre-populated.
-	availableLanguages := []config.Language{
-		{ID: "golang", Name: "Go"},
-		{ID: "python", Name: "Python"},
-	}
-	MainUI(availableLanguages)
 }
