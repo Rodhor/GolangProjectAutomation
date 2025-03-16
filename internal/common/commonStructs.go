@@ -32,6 +32,7 @@ type FileOrDirectory struct {
 }
 
 type Command struct {
-	Cmd     string `yaml:"cmd"`
-	RunTime string `yaml:"runtime"`
+	Cmd           string `yaml:"cmd"`
+	RunTime       string `yaml:"runtime"`
+	ActualRunTime RunTime
 }

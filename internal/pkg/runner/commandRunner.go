@@ -5,18 +5,21 @@ import (
 	"os/exec"
 	"projectAutomation/internal/common"
 	"projectAutomation/internal/config"
+	"projectAutomation/internal/pkg/project"
 )
 
-func CommandsOrganiser(commands map[string]common.Command, p *config.Project) []error {
+func CommandsOrganiser(p *project.Project, r common.RunTime) []error {
 	var errors []error
 	// Get shell of current running computer
 	shell := GetShell()
 
-	for _, cmd := range commands {
-		execCmd := AdjustDynamicCommands(cmd.Cmd, p)
-		err := CommandRunner(execCmd, shell, p.ProjectDir)
-		if err != nil {
-			errors = append(errors, err)
+	for _, cmd := range p.Language.Commands {
+		if cmd.ActualRunTime == r {
+			execCmd := AdjustDynamicCommands(cmd.Cmd, p)
+			err := CommandRunner(execCmd, shell, p.RootDir)
+			if err != nil {
+				errors = append(errors, err)
+			}
 		}
 	}
 	return errors

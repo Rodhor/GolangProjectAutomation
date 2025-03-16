@@ -2,6 +2,7 @@ package runner
 
 import (
 	"projectAutomation/internal/config"
+	"projectAutomation/internal/pkg/project"
 	"regexp"
 	"runtime"
 )
@@ -13,7 +14,7 @@ func GetShell() config.Shell {
 	return config.Shell{Shell: "sh", ArgFlag: "-c"}
 }
 
-func ResolvePlaceholder(p config.PlaceholderArg, project *config.Project) string {
+func ResolvePlaceholder(p config.PlaceholderArg, project *project.Project) string {
 	switch p {
 
 	case config.ArgProjectName:
@@ -30,7 +31,7 @@ func ResolvePlaceholder(p config.PlaceholderArg, project *config.Project) string
 	}
 }
 
-func AdjustDynamicCommands(cmd string, project *config.Project) string {
+func AdjustDynamicCommands(cmd string, project *project.Project) string {
 	re := regexp.MustCompile(`\{\{\s*(\w+)\s*\}\}`)
 	return re.ReplaceAllStringFunc(cmd, func(match string) string {
 		// Use FindStringSubmatch to extract the variable name without extra spaces.
@@ -44,14 +45,14 @@ func AdjustDynamicCommands(cmd string, project *config.Project) string {
 	})
 }
 
-func GetProjectName(p *config.Project) string {
-	return p.ProjectName
+func GetProjectName(p *project.Project) string {
+	return p.Name
 }
 
-func GetProjectPath(p *config.Project) string {
-	return p.ProjectDir
+func GetProjectPath(p *project.Project) string {
+	return p.RootDir
 }
 
-func GetProjectLanguage(p *config.Project) string {
-	return p.ProjectLanguage
+func GetProjectLanguage(p *project.Project) string {
+	return p.Language.Name
 }

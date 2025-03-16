@@ -1,42 +1,46 @@
 package ui
 
 import (
-	"fmt"
 	"log"
 	"projectAutomation/internal/config"
+	"projectAutomation/internal/pkg/project"
 )
 
-func MainUI(langs []config.Language) {
-	var p config.Project
+func MainUI(langs []config.Language, p *project.Project) {
 	firstSelection, err := selectLanguage(langs)
 	if err != nil {
 		log.Fatal(err)
 	}
-	p.ProjectName = firstSelection.name
-	p.ProjectLanguage = firstSelection.language
-
-	var selectedLang *config.Language
+	p.Name = firstSelection.name
+	languageSelection := firstSelection.language
 	for i, lang := range langs {
-		if lang.ID == p.ProjectLanguage {
-			selectedLang = &langs[i]
+		if lang.ID == languageSelection {
+			p.Language = &langs[i]
 			break
 		}
 	}
-	if selectedLang == nil {
-		log.Fatalf("Language with ID %s not found", p.ProjectLanguage)
+	if p.Language == nil {
+		log.Fatalf("Language with ID %s not found", languageSelection)
 	}
 
-	languagespecificSelection, err := selectLanguageSpecificOptions(*selectedLang)
+	languagespecificSelection, err := selectLanguageSpecificOptions(*p.Language)
 	if err != nil {
 		log.Fatal(err)
 	}
-	p.ProjectStructure = languagespecificSelection.folderStructure
-	p.ProjectPackages = languagespecificSelection.packages
-	pkgSelected := len(p.ProjectPackages) != 0
-	overallConfirmation, err := getConfirmationToExecute(pkgSelected)
-	if err != nil {
-		log.Fatal(err)
+	for _, folderstruct := range p.Language.FileStructure {
+		if folderstruct.ID == languagespecificSelection.folderStructure {
+			p.Structure = folderstruct
+		}
 	}
 
-	fmt.Println(overallConfirmation)
+	var packages []config.Package
+	for _, pkg := range *p.Language.LanguagePackages {
+		for _, pkgid := range languagespecificSelection.packages {
+			if pkg.ID == pkgid {
+				packages = append(packages, pkg)
+			}
+		}
+	}
+
+	p.Packages = packages
 }

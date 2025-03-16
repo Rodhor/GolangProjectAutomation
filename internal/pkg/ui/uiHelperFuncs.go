@@ -16,11 +16,11 @@ func fetchFolderStructures(lang config.Language) []huh.Option[string] {
 
 func fetchPackageOptions(lang config.Language) []huh.Option[string] {
 	var options []huh.Option[string]
-	if lang.PackageIDs == nil {
+	if lang.LanguagePackages == nil {
 		return options
 	}
-	for _, pkg := range *lang.PackageIDs {
-		options = append(options, huh.NewOption(pkg, pkg))
+	for _, pkg := range *lang.LanguagePackages {
+		options = append(options, huh.NewOption(pkg.Name, pkg.ID))
 	}
 	return options
 }

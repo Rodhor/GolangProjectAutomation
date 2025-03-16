@@ -61,7 +61,7 @@ func RetrieveEmbeddedLanguages() ([]config.Language, []error) {
 			if err != nil {
 				errs = append(errs, fmt.Errorf("error reading the package directory %s: %w", pkgDir, err))
 			} else {
-				var pkgIDs []string
+				var pkgs []config.Package
 				for _, pkgEntry := range pkgEntries {
 					if !pkgEntry.IsDir() && parser.CheckFileType(pkgEntry.Name()) {
 						pkgPath := filepath.Join(pkgDir, pkgEntry.Name())
@@ -71,10 +71,10 @@ func RetrieveEmbeddedLanguages() ([]config.Language, []error) {
 							continue
 						}
 
-						pkgIDs = append(pkgIDs, pkg.ID)
+						pkgs = append(pkgs, *pkg)
 					}
 				}
-				lang.PackageIDs = &pkgIDs
+				lang.LanguagePackages = &pkgs
 			}
 		}
 		langs = append(langs, *lang)
